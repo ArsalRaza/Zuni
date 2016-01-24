@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_very_small"
+    android:orientation="vertical" >
+
+    <RelativeLayout 
+        android:id="@+id/adapter_category_first_image_layout"
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+	    android:layout_marginBottom="@dimen/margin_very_small">
+	    
+		<ImageView
+	        android:id="@+id/adapter_category_first_imageview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+		    android:scaleType="centerCrop"
+	        android:src="@drawable/ic_launcher" />
+	    
+        <ImageView
+	        android:id="@+id/adapter_category_shade_imageview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+		    android:scaleType="fitXY"
+	        android:src="@drawable/transparent_shade" />
+	    
+	    <TextView 
+	        android:id="@+id/adapter_category_first_textview"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+		    android:layout_alignParentBottom="true"
+		    android:layout_centerHorizontal="true"
+		    android:layout_marginBottom="@dimen/margin_30"
+		    android:textColor="@android:color/white"
+			android:gravity="center"
+		    android:text="Arsal"
+		    android:maxLines="3"
+		    android:ellipsize="end"
+	        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+	</RelativeLayout>
+    
+
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="1"
+	    android:layout_marginTop="@dimen/margin_very_small"
+        android:orientation="horizontal">
+
+	    <RelativeLayout 
+	        android:id="@+id/adapter_category_sec_image_layout"
+		    android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:layout_marginRight="@dimen/margin_very_small">
+	        
+		    <ImageView
+		        android:id="@+id/adapter_category_sec_imageview"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+			    android:scaleType="centerCrop"
+		        android:src="@drawable/ic_launcher" />    
+
+		    <ImageView
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+			    android:scaleType="fitXY"
+		        android:src="@drawable/transparent_shade" />
+		    
+		    <TextView 
+		        android:id="@+id/adapter_category_sec_textview"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		    	android:layout_alignParentBottom="true"
+		    	android:layout_centerHorizontal="true"
+		    	android:layout_marginBottom="@dimen/margin_20"
+		    	android:textColor="@android:color/white"
+				android:gravity="center"
+			    android:text="Arsal"
+			    android:maxLines="3"
+			    android:ellipsize="end"
+			    android:textAppearance="?android:attr/textAppearanceLarge"/>
+		    	
+		</RelativeLayout>
+	    <RelativeLayout 
+	        android:id="@+id/adapter_category_third_image_layout"
+		    android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:layout_marginLeft="@dimen/margin_very_small">
+	        
+		    <ImageView
+		        android:id="@+id/adapter_category_third_imageview"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+			    android:scaleType="centerCrop"
+		        android:src="@drawable/ic_launcher" />    
+
+		    <ImageView
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+			    android:scaleType="fitXY"
+		        android:src="@drawable/transparent_shade" />
+		    
+		    <TextView 
+		        android:id="@+id/adapter_category_third_textview"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		    	android:layout_alignParentBottom="true"
+		    	android:layout_centerHorizontal="true"
+		    	android:layout_marginBottom="@dimen/margin_20"
+		    	android:gravity="center"
+		    	android:textColor="@android:color/white"
+			    android:text="Arsal"
+			    android:maxLines="3"
+			    android:ellipsize="end"
+		        android:textAppearance="?android:attr/textAppearanceLarge"/>
+		    	
+		</RelativeLayout>
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/sa.etrendz.zunni"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:id="@+id/toolbar_home_category">
+    
+    <ImageView
+        android:id="@+id/burger_imageview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/humburger_slide"
+        android:contentDescription="@string/app_name"/>
+    
+	<TextView
+        android:id="@+id/title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="COLLECTION"
+        android:layout_marginLeft="@dimen/margin_15"
+        android:layout_marginTop="-4dp"
+        android:textSize="@dimen/text_size_large"
+        android:textStyle="bold"
+        android:contentDescription="@string/app_name"/>
+
+</android.support.v7.widget.Toolbar>
