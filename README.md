@@ -1,2 +1,0 @@
-# Adha-English
-#Good one
