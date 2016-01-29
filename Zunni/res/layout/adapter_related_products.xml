@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="175dp"
+    android:layout_height="200dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_10">
+    
+    <ImageView
+        android:id="@+id/adapter_related_product_imageview"
+	    android:layout_width="175dp"
+	    android:layout_height="200dp"
+	    android:layout_weight="0.3"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher"
+        android:scaleType="fitXY"/>
+    
+    <RelativeLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="0.7"
+	    android:layout_marginLeft="@dimen/margin_very_small">
+
+        <TextView
+            android:id="@+id/adapter_related_product_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Amaze"
+            android:textColor="@color/light_grey"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/adapter_related_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/adapter_related_product_value"
+            android:text="Medium Text"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <TextView
+            android:id="@+id/adapter_related_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/adapter_related_product_name"
+            android:text="Medium Text"
+            android:singleLine="true"
+            android:textColor="@android:color/black"/>
+    </RelativeLayout>
+    
+</LinearLayout>
