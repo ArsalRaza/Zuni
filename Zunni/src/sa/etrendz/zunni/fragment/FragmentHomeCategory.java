@@ -58,5 +58,4 @@ public class FragmentHomeCategory extends Fragment
 			}
 		}
     }
-
 }

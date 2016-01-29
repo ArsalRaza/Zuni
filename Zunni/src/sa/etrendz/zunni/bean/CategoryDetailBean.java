@@ -3,8 +3,6 @@ package sa.etrendz.zunni.bean;
 import java.util.ArrayList;
 import java.util.List;
 
-import sa.etrendz.zunni.bean.BeanGetAllCategory.PictureModel;
-
 
 public class CategoryDetailBean 
 {
@@ -12,7 +10,7 @@ public class CategoryDetailBean
 	, HasChild, DisplayCategoryBreadcrumb
 	,Id;
 
-	private PictureModel PictureModel;
+	private BeanServerImage PictureModel;
 	
 	private Object CustomProperties;
 	private Object PriceRanges;

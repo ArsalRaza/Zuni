@@ -6,4 +6,12 @@ public class BeanProductPrice
 	
 	private String AvailableForPreOrder, DisableAddToCompareListButton, DisableBuyButton, DisableWishlistButton
 				, DisplayTaxShippingInfo, ForceRedirectionAfterAddingToCart, IsRental;
+
+	public String getPrice() {
+		return Price;
+	}
+
+	public void setPrice(String price) {
+		Price = price;
+	}
 }

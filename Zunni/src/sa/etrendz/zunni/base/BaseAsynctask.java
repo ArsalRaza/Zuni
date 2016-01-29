@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 public abstract class BaseAsynctask extends
 		AsyncTask<String, Void, String>
 {
-	private Activity mActivity;
+	protected Activity mActivity;
 	private ProgressDialog mDialog;
 	
 	protected abstract void onComplete(String output);

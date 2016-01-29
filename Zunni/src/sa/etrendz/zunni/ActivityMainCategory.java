@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 
 public class ActivityMainCategory extends AppCompatActivity implements OnClickListener
@@ -25,7 +24,7 @@ public class ActivityMainCategory extends AppCompatActivity implements OnClickLi
 	private FrameLayout mLeftSideContainer;
 //	private FrameLayout mMainContainer;
 	private DrawerLayout mDrawerLayout;
-	private ImageView mNavToggleButton;
+//	private ImageView mNavToggleButton;
 	private boolean mIsOpened = false;
 
 	@Override
@@ -34,7 +33,7 @@ public class ActivityMainCategory extends AppCompatActivity implements OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_category);
         mFragmentManager = getSupportFragmentManager();
-
+        
         InitUI();
     }
 
@@ -57,16 +56,27 @@ public class ActivityMainCategory extends AppCompatActivity implements OnClickLi
 		mFragmentManager.beginTransaction().replace(R.id.left_container, mLeftSideFragment).commitAllowingStateLoss();
 	}
 	
+	@SuppressWarnings("deprecation")
 	private void setActionBar()
 	{
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		mNavToggleButton = (ImageView) toolbar.findViewById(R.id.burger_imageview);
+		toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.humburger_slide));
+
 		setSupportActionBar(toolbar);
+		toolbar.setNavigationOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				toggle();
+			}
+		});
 		
+		toolbar.setTitle("COLLECTION");
+				
 		ActionBar supportToolBar = getSupportActionBar();
-		supportToolBar.setDisplayShowTitleEnabled(false);
-	
-		mNavToggleButton.setOnClickListener(this);
+		supportToolBar.setDisplayShowTitleEnabled(true);
+		supportToolBar.setTitle("COLLECTION");
 	}
 
 	@Override
@@ -74,10 +84,7 @@ public class ActivityMainCategory extends AppCompatActivity implements OnClickLi
 	{
 		switch (v.getId())
 		{
-		case R.id.burger_imageview:
-			toggle();
-			break;
-
+		
 		}
 	}
 

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="light_black">#bebebe</color>    
+	<color name="light_black">#bebebe</color>
+	<color name="light_white_black">#3a3a3c</color>
+	<color name="price_tag_pink">#ea148d</color>
+	<color name="light_grey">#95969a</color>
+	<color name="brown">#9f7a60</color>
+	<color name="sky_blue">#29abdf</color>
+	<color name="dark_green">#0c673c</color>
 </resources>

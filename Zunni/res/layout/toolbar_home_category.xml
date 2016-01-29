@@ -9,7 +9,7 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     android:id="@+id/toolbar_home_category">
     
-    <ImageView
+<!--     <ImageView
         android:id="@+id/burger_imageview"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -26,5 +26,5 @@
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
         android:contentDescription="@string/app_name"/>
-
+ -->
 </android.support.v7.widget.Toolbar>

@@ -1,23 +1,42 @@
 package sa.etrendz.zunni.bean;
 
-import sa.etrendz.zunni.bean.BeanGetAllCategory.PictureModel;
 
 public class BeanProductDetail 
 {
 	private String Name, ShortDescription, FullDescription, Id, SeName;
 	private BeanProductPrice ProductPrice;
-	private PictureModel DefaultPictureModel;
+	private BeanServerImage DefaultPictureModel;
 	private BeanReviewModel ReviewOverviewModel;
-	public PictureModel getImageModel() {
+	
+	public BeanServerImage getImageModel() {
 		return DefaultPictureModel;
 	}
-	public void setImageModel(PictureModel defaultPictureModel) {
+	
+	public void setImageModel(BeanServerImage defaultPictureModel) {
 		DefaultPictureModel = defaultPictureModel;
 	}
+	
 	public String getProductName() {
 		return Name;
 	}
+	
 	public void setProductName(String name) {
 		Name = name;
+	}
+	
+	public BeanProductPrice getProductPrice() {
+		return ProductPrice;
+	}
+	
+	public void setProductPrice(BeanProductPrice productPrice) {
+		ProductPrice = productPrice;
+	}
+
+	public String getmProductId() {
+		return Id;
+	}
+
+	public void setmProductId(String id) {
+		Id = id;
 	}
 }

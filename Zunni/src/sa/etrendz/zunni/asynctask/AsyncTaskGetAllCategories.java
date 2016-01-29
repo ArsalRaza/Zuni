@@ -10,7 +10,6 @@ import sa.etrendz.zunni.network.GetPostSender;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -34,11 +33,10 @@ public class AsyncTaskGetAllCategories extends BaseAsynctask
 		String response = new GetPostSender().sendGet(ZunniConstants.BASE_URL + ZunniConstants.GET_ALL_CATEGORY_URL);
 		String checkPoint = onResponseReceived(response);
 		
-		Log.e("Response:", "asd/" + response);
 		if (checkPoint.equalsIgnoreCase(""))
 		{
 			try
-			{
+			{ 
 				Gson gson = new Gson();
 				Type type = new TypeToken<List<BeanGetAllCategory>>(){}.getType();
 				mBeanGetAllCategories = (List<BeanGetAllCategory>) gson.fromJson(response, type);

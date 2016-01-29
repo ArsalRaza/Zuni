@@ -3,35 +3,20 @@ package sa.etrendz.zunni.bean;
 public class BeanGetAllCategory 
 {
 	private String Name, Description, MetaKeywords, MetaDescription, MetaTitle, SeName
-				, HasChild, DisplayCategoryBreadcrumb
+				, HasChild = "false", DisplayCategoryBreadcrumb
 				,Id;
 	
-	private PictureModel PictureModel;
+	private BeanServerImage PictureModel;
 
 	private Object CustomProperties;
 	private Object PriceRanges;
 	private Object PageSizeOptions;
-	
-	public static class PictureModel
-	{
-		private String ImageUrl, FullSizeImageUrl, Title, AlternateText;
-		
-		private Object CustomProperties;
-		
-		public String getThumbImageUrl() {
-			return ImageUrl;
-		}
 
-		public void setThumbImageUrl(String imageUrl) {
-			ImageUrl = imageUrl;
-		}
-	}
-
-	public PictureModel getImageModel() {
+	public BeanServerImage getImageModel() {
 		return PictureModel;
 	}
 
-	public void setImageModel(PictureModel pictureModel) {
+	public void setImageModel(BeanServerImage pictureModel) {
 		this.PictureModel = pictureModel;
 	}
 
@@ -49,5 +34,13 @@ public class BeanGetAllCategory
 
 	public void setmCategoryId(String id) {
 		Id = id;
+	}
+
+	public String getmHasSubCategory() {
+		return HasChild;
+	}
+
+	public void setmHasSubCategory(String hasChild) {
+		HasChild = hasChild;
 	}
 }

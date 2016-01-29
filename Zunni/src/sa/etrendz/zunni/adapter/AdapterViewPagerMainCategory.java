@@ -2,24 +2,27 @@ package sa.etrendz.zunni.adapter;
 
 import java.util.List;
 
-import sa.etrendz.zunni.ActivitySubCategoryProducts;
+import sa.etrendz.zunni.ActivityProductList;
+import sa.etrendz.zunni.ActivitySubCategory;
 import sa.etrendz.zunni.R;
 import sa.etrendz.zunni.ZunniApplication;
 import sa.etrendz.zunni.bean.BeanGetAllCategory;
-import sa.etrendz.zunni.bean.BeanGetAllCategory.PictureModel;
+import sa.etrendz.zunni.bean.BeanServerImage;
+import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
@@ -36,11 +39,13 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 		mCategoryList = mCategoryListBean2;
 		mInflater = (LayoutInflater) activityMainCategory.getSystemService(Context.LAYOUT_INFLATER_SERVICE); 
 	}
+	
 	public void notifyDataSetChanged(List<BeanGetAllCategory> beanGetAllCategories)
 	{
 		this.mCategoryList = beanGetAllCategories;
 		notifyDataSetChanged();
 	}
+
 	@Override
 	public int getCount() 
 	{
@@ -70,9 +75,9 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 		TextView mSecondTextView = (TextView) view.findViewById(R.id.adapter_category_sec_textview);
 		TextView mThirdTextView = (TextView) view.findViewById(R.id.adapter_category_third_textview);
 		
-		RelativeLayout mFirstLayout = (RelativeLayout) view.findViewById(R.id.adapter_category_first_image_layout);
-		RelativeLayout mSecondLayout = (RelativeLayout) view.findViewById(R.id.adapter_category_sec_image_layout);
-		RelativeLayout mThirdLayout = (RelativeLayout) view.findViewById(R.id.adapter_category_third_image_layout);
+		CardView mFirstLayout = (CardView) view.findViewById(R.id.adapter_category_first_image_layout);
+		CardView mSecondLayout = (CardView) view.findViewById(R.id.adapter_category_sec_image_layout);
+		CardView mThirdLayout = (CardView) view.findViewById(R.id.adapter_category_third_image_layout);
 	
 		int firstBean = position;
 		int secondBean = position + 1;
@@ -123,7 +128,7 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 		return view;
 	}
 
-	private void setContentView(ImageView mFirstImageView, PictureModel imageModel) 
+	private void setContentView(ImageView mFirstImageView, BeanServerImage imageModel) 
 	{
 		String mimeUrl = imageModel.getThumbImageUrl();
 		ZunniApplication.getmCacheManager().load(Uri.parse(mimeUrl)).into(mFirstImageView, this);
@@ -144,9 +149,25 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 	@Override
 	public void onClick(View v) 
 	{
-		Integer tag = (Integer) v.getTag();
-		Intent intent = new Intent(mActivity, ActivitySubCategoryProducts.class);
-		intent.putExtra("categoryid", mCategoryList.get(tag).getmCategoryId());
-		mActivity.startActivity(intent);
+		BeanGetAllCategory beanGetAllCategory = mCategoryList.get((Integer) v.getTag());
+	
+
+		Editor editor = ZunniApplication.getmAppPrefEditor();
+		editor.putString(ZunniConstants.SELECTED_CATEGORY_NAME, beanGetAllCategory.getmCategoryName());
+		editor.commit();
+		
+		if (beanGetAllCategory.getmHasSubCategory().equalsIgnoreCase("true"))
+		{
+			Intent intent = new Intent(mActivity, ActivitySubCategory.class);
+			intent.putExtra("categoryid", beanGetAllCategory.getmCategoryId());
+			mActivity.startActivity(intent);
+		}
+		else
+		{
+
+			Intent intent = new Intent(mActivity, ActivityProductList.class);
+			intent.putExtra("categoryid", beanGetAllCategory.getmCategoryId());
+			mActivity.startActivity(intent);
+		}
 	}
 }

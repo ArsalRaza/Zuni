@@ -6,10 +6,10 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import sa.etrendz.zunni.ActivitySubCategoryProducts;
+import sa.etrendz.zunni.ActivityProductList;
+import sa.etrendz.zunni.ActivitySubCategory;
 import sa.etrendz.zunni.base.BaseAsynctask;
 import sa.etrendz.zunni.bean.BeanGetAllCategory;
-import sa.etrendz.zunni.bean.BeanProductDetail;
 import sa.etrendz.zunni.bean.BeanSubCategoryProductForAdapter;
 import sa.etrendz.zunni.bean.CategoryDetailBean;
 import sa.etrendz.zunni.network.GetPostSender;
@@ -64,15 +64,17 @@ public class AsynctaskGetCategoryDetail extends BaseAsynctask {
 					mEmptyAdapterList.add(beanSubCategoryProductForAdapter);
 					
 				}
-				Type typeForProductType = new TypeToken<List<BeanProductDetail>>(){}.getType();
-				List<BeanProductDetail> mFilledProducts = (List<BeanProductDetail>) gson.fromJson(new JSONObject(response).getString("Products"), typeForProductType);
-				for (BeanProductDetail beanGetAllProductDetail : mFilledProducts)
-				{
-					BeanSubCategoryProductForAdapter beanSubCategoryProductForAdapter = new BeanSubCategoryProductForAdapter();
-					beanSubCategoryProductForAdapter.setmBean(beanGetAllProductDetail);
-					beanSubCategoryProductForAdapter.setmIsSubCategoryObject(false);
-					mEmptyAdapterList.add(beanSubCategoryProductForAdapter);
-				}
+				
+//				Type typeForProductType = new TypeToken<List<BeanProductDetail>>(){}.getType();
+//				List<BeanProductDetail> mFilledProducts = (List<BeanProductDetail>) gson.fromJson(new JSONObject(response).getString("Products"), typeForProductType);
+//				for (BeanProductDetail beanGetAllProductDetail : mFilledProducts)
+//				{
+//					BeanSubCategoryProductForAdapter beanSubCategoryProductForAdapter = new BeanSubCategoryProductForAdapter();
+//					beanSubCategoryProductForAdapter.setmBean(beanGetAllProductDetail);
+//					beanSubCategoryProductForAdapter.setmIsSubCategoryObject(false);
+//					mEmptyAdapterList.add(beanSubCategoryProductForAdapter);
+//				}
+
 				mCategoryDetailBean.setmBeanListForAdapter(mEmptyAdapterList);
 			}
 			catch (Exception exce)
@@ -109,15 +111,18 @@ public class AsynctaskGetCategoryDetail extends BaseAsynctask {
 	{
 		if (output.equalsIgnoreCase(""))
 		{
-			if (mFromWhere instanceof ActivitySubCategoryProducts)
+			if (mFromWhere instanceof ActivitySubCategory)
 			{
-				((ActivitySubCategoryProducts) mFromWhere).updateCategories(mCategoryDetailBean);
+				((ActivitySubCategory) mFromWhere).updateCategories(mCategoryDetailBean);
+			}
+			else if (mFromWhere instanceof ActivityProductList) {
+				((ActivityProductList) mFromWhere).updateProducts(mCategoryDetailBean.getProducts());
 			}
 		}
 		else
 		{
-			if (mFromWhere instanceof ActivitySubCategoryProducts)
-			Toast.makeText((Activity) ((ActivitySubCategoryProducts) mFromWhere), output, Toast.LENGTH_LONG).show();
+			if (mFromWhere instanceof Activity)
+				Toast.makeText(((Activity) mFromWhere), output, Toast.LENGTH_LONG).show();
 		}
 	}
 }
