@@ -1,27 +1,27 @@
 package sa.etrendz.zunni.asynctask;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import sa.etrendz.zunni.ActivityProductReview;
 import sa.etrendz.zunni.base.BaseAsynctask;
-import sa.etrendz.zunni.bean.BeanGetAllCategory;
-import sa.etrendz.zunni.bean.BeanProductDetail;
+import sa.etrendz.zunni.bean.BeanProductForCategory;
 import sa.etrendz.zunni.network.GetPostSender;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 public class AsynctaskGetRelatedProducts extends
 		BaseAsynctask
 {
 	private String mProductId;
-	private List<BeanProductDetail> mBeanRelatedProducts;
+	private List<BeanProductForCategory> mBeanRelatedProducts;
 
 	public AsynctaskGetRelatedProducts(Activity activity, String productId)
 	{
@@ -41,13 +41,13 @@ public class AsynctaskGetRelatedProducts extends
 			try
 			{
 				Gson gson = new Gson();
-				Type type = new TypeToken<List<BeanProductDetail>>(){}.getType();
-				mBeanRelatedProducts = (List<BeanProductDetail>) gson.fromJson(response, type);
+				Type type = new TypeToken<List<BeanProductForCategory>>(){}.getType();
+				mBeanRelatedProducts = (List<BeanProductForCategory>) gson.fromJson(response, type);
 			}
 			catch (Exception exce)
 			{
+				mBeanRelatedProducts = new ArrayList<BeanProductForCategory>();
 				exce.printStackTrace();
-				return "Invalid response is coming from the server";
 			}
 		}
 		else

@@ -9,13 +9,13 @@ import sa.etrendz.zunni.ZunniApplication;
 import sa.etrendz.zunni.bean.BeanGetAllCategory;
 import sa.etrendz.zunni.bean.BeanServerImage;
 import sa.etrendz.zunni.utils.ZunniConstants;
+import sa.etrendz.zunni.view.VerticalViewPager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +60,7 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 	@Override
 	public void destroyItem(View container, int position, Object object) 
 	{
-		((ViewPager) container).removeView((LinearLayout)object);
+		((VerticalViewPager) container).removeView((LinearLayout)object);
 	}
 	@Override
 	public Object instantiateItem(ViewGroup container, int position)
@@ -124,7 +124,7 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 		mSecondLayout.setOnClickListener(this);
 		mThirdLayout.setOnClickListener(this);
 		
-		((ViewPager) container).addView(view);
+		((VerticalViewPager) container).addView(view);
 		return view;
 	}
 

@@ -13,4 +13,12 @@ public class BeanServerImage
 	public void setThumbImageUrl(String imageUrl) {
 		ImageUrl = imageUrl;
 	}
+
+	public String getmFullSizeImageUrl() {
+		return FullSizeImageUrl;
+	}
+
+	public void setmFullSizeImageUrl(String fullSizeImageUrl) {
+		FullSizeImageUrl = fullSizeImageUrl;
+	}
 }

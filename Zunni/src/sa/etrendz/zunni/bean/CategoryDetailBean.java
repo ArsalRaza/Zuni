@@ -16,14 +16,14 @@ public class CategoryDetailBean
 	private Object PriceRanges;
 	private Object PageSizeOptions;
 	
-	private ArrayList<BeanProductDetail> Products;
+	private ArrayList<BeanProductForCategory> Products;
 	private ArrayList<BeanGetAllCategory> SubCategories;
 	private List<BeanSubCategoryProductForAdapter> mBeanListForAdapter;
 	
-	public ArrayList<BeanProductDetail> getProducts() {
+	public ArrayList<BeanProductForCategory> getProducts() {
 		return Products;
 	}
-	public void setProducts(ArrayList<BeanProductDetail> products) {
+	public void setProducts(ArrayList<BeanProductForCategory> products) {
 		Products = products;
 	}
 	public ArrayList<BeanGetAllCategory> getSubCategories() {

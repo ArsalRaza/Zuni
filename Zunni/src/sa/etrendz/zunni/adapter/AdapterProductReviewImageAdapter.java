@@ -2,20 +2,24 @@ package sa.etrendz.zunni.adapter;
 
 import java.util.ArrayList;
 
+import sa.etrendz.zunni.ActivityFullScreenImage;
 import sa.etrendz.zunni.R;
 import sa.etrendz.zunni.ZunniApplication;
 import sa.etrendz.zunni.bean.BeanServerImage;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-public class AdapterProductReviewImageAdapter extends PagerAdapter {
+public class AdapterProductReviewImageAdapter extends PagerAdapter implements OnClickListener
+{
 
 	private Activity mActivity;
 	private ArrayList<BeanServerImage> mImageBeanList;
@@ -45,9 +49,12 @@ public class AdapterProductReviewImageAdapter extends PagerAdapter {
     	View view = mLayoutInflater.inflate(R.layout.adapter_product_review_image, null);
     	ImageView imageView = (ImageView) view.findViewById(R.id.adapter_product_review_imageview);
     	
-    	setContentView(imageView, mImageBeanList.get(position).getThumbImageUrl());
+    	setContentView(imageView, mImageBeanList.get(position).getmFullSizeImageUrl());
     	
-		((ViewPager) container).addView(view);
+    	imageView.setTag(mImageBeanList.get(position).getmFullSizeImageUrl());
+    	imageView.setOnClickListener(this);
+		
+    	((ViewPager) container).addView(view);
 		return view;
     }
     
@@ -70,5 +77,13 @@ public class AdapterProductReviewImageAdapter extends PagerAdapter {
 	{
 		mImageBeanList = mUriList;
 		notifyDataSetChanged();
+	}
+
+	@Override
+	public void onClick(View v) 
+	{
+		Intent intent = new Intent(mActivity, ActivityFullScreenImage.class);
+		intent.putExtra("image-url", ((String) v.getTag()));
+		mActivity.startActivity(intent);
 	}
 }

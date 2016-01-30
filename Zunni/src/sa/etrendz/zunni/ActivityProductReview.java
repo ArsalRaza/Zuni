@@ -1,12 +1,12 @@
 package sa.etrendz.zunni;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import sa.etrendz.zunni.adapter.AdapterProductReviewImageAdapter;
+import sa.etrendz.zunni.asynctask.AsynctaskGetProductDetail;
 import sa.etrendz.zunni.asynctask.AsynctaskGetRelatedProducts;
 import sa.etrendz.zunni.bean.BeanProductDetail;
-import sa.etrendz.zunni.bean.BeanServerImage;
+import sa.etrendz.zunni.bean.BeanProductForCategory;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.content.Context;
 import android.net.Uri;
@@ -24,12 +24,12 @@ import android.widget.TextView;
 
 public class ActivityProductReview extends AppCompatActivity 
 {
-	public static BeanProductDetail mProductBean;
+	private BeanProductDetail mProductBean;
 	private TextView mPriceTextView;
 	private TextView mCategoryTextView;
 	private ViewPager mImageViewPager;
 	private ImageView mInfoImageView;
-	private List<BeanProductDetail> mRelatedProducts;
+	private List<BeanProductForCategory> mRelatedProducts;
 	private LinearLayout mRelatedProductsLayout;
 
 	@Override
@@ -40,9 +40,20 @@ public class ActivityProductReview extends AppCompatActivity
 		initActionBar();
 		InitUI();
 		
-		new AsynctaskGetRelatedProducts(this, mProductBean.getmProductId()).execute();
+		String mProductId = "";
+		if (getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().containsKey("productId"))
+		{
+			mProductId = getIntent().getStringExtra("productId");
+		}
+		else
+		{
+			finish();
+		}
+		new AsynctaskGetProductDetail(ActivityProductReview.this, mProductId).execute();
+		new AsynctaskGetRelatedProducts(this, mProductId).execute();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void initActionBar() 
 	{
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_activity_product_review);
@@ -60,7 +71,6 @@ public class ActivityProductReview extends AppCompatActivity
 		
 		ActionBar supportToolBar = getSupportActionBar();
 		supportToolBar.setDisplayShowTitleEnabled(true);
-		supportToolBar.setTitle(mProductBean.getProductName());
 	}
 
 	private void InitUI()
@@ -70,31 +80,29 @@ public class ActivityProductReview extends AppCompatActivity
 		mInfoImageView = (ImageView) findViewById(R.id.activity_product_review_info);
 		mImageViewPager = (ViewPager) findViewById(R.id.activity_product_review_viewpager);
 		mRelatedProductsLayout = (LinearLayout) findViewById(R.id.activity_product_review_similar_products);
-		
-		
-		//Now setting data
-		if (mProductBean != null)
+	}
+	
+	public void onProductDetailsObtained(BeanProductDetail mProductDetailBean) 
+	{
+		if (mProductDetailBean == null)
 		{
-			mPriceTextView.setText(String.format(getString(R.string.price_with_format), mProductBean.getProductPrice().getPrice()));
-		
-			String categoryNameString = ZunniApplication.getmAppPreferences().getString(ZunniConstants.SELECTED_CATEGORY_NAME, "");
-			mCategoryTextView.setText(categoryNameString);
-			
-			ArrayList<BeanServerImage> mImageBeanList = new ArrayList<BeanServerImage>();
-			mImageBeanList.add(mProductBean.getImageModel());
-			
-			if (mImageViewPager.getAdapter() == null)
-				mImageViewPager.setAdapter(new AdapterProductReviewImageAdapter(this, mImageBeanList));
-			else
-				((AdapterProductReviewImageAdapter) mImageViewPager.getAdapter()).notifyListChanged(mImageBeanList);
+			return;
 		}
+		this.mProductBean = mProductDetailBean;
+		mPriceTextView.setText(String.format(getString(R.string.price_with_format), mProductBean.getProductPrice().getPrice()));
+		
+		String categoryNameString = ZunniApplication.getmAppPreferences().getString(ZunniConstants.SELECTED_CATEGORY_NAME, "");
+		mCategoryTextView.setText(categoryNameString);
+		
+		if (mImageViewPager.getAdapter() == null)
+			mImageViewPager.setAdapter(new AdapterProductReviewImageAdapter(this, mProductDetailBean.getmProductImageModel()));
 		else
-		{
-			
-		}
+			((AdapterProductReviewImageAdapter) mImageViewPager.getAdapter()).notifyListChanged(mProductDetailBean.getmProductImageModel());
+
+		getSupportActionBar().setTitle(mProductBean.getmProductName());
 	}
 
-	public void updateRelatedProducts(List<BeanProductDetail> mBeanRelatedProducts) 
+	public void updateRelatedProducts(List<BeanProductForCategory> mBeanRelatedProducts) 
 	{
 		if (mBeanRelatedProducts != null)
 		{
@@ -122,10 +130,8 @@ public class ActivityProductReview extends AppCompatActivity
 					public void onClick(View v)
 					{
 						//Related product
-						
 					}
 				});
-				
 				mRelatedProductsLayout.addView(view);
 			}
 		}

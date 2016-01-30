@@ -41,7 +41,6 @@ public class AsynctaskGetCategoryDetail extends BaseAsynctask {
 		String responseModel = obtainResponseFromApi();
 		String checkPoint = onResponseReceived(responseModel);
 
-		Log.e("Response:", "asd/" + responseModel);
 		if (checkPoint.equalsIgnoreCase(""))
 		{
 			try

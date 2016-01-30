@@ -5,10 +5,12 @@ import java.util.List;
 import sa.etrendz.zunni.ActivityProductReview;
 import sa.etrendz.zunni.R;
 import sa.etrendz.zunni.ZunniApplication;
-import sa.etrendz.zunni.bean.BeanProductDetail;
+import sa.etrendz.zunni.bean.BeanProductForCategory;
+import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +22,12 @@ import android.widget.TextView;
 
 public class AdapterProductList extends BaseAdapter implements OnClickListener {
 
-	private List<BeanProductDetail> mList;
+	private List<BeanProductForCategory> mList;
 	private Activity mActivity;
 	private LayoutInflater mLayoutInflater;
 
 	public AdapterProductList(Activity activityProductList,
-			List<BeanProductDetail> mAllProductsList2) 
+			List<BeanProductForCategory> mAllProductsList2) 
 	{
 		this.mActivity = activityProductList;
 		this.mList = mAllProductsList2;
@@ -55,11 +57,20 @@ public class AdapterProductList extends BaseAdapter implements OnClickListener {
 			convertView = mLayoutInflater.inflate(R.layout.adapter_product_list, null);
 		}
 		
-		ImageView mBackgroundImageView = (ImageView) convertView.findViewById(R.id.adapter_product_first_imageview);
-		TextView mTitleTextView = (TextView) convertView.findViewById(R.id.adapter_product_first_textview);
+		ImageView mBackgroundImageView = (ImageView) convertView.findViewById(R.id.adapter_product_imageview);
 		
-		setContentView(mList.get(position).getImageModel().getThumbImageUrl(), mBackgroundImageView);
+		TextView mTitleTextView = (TextView) convertView.findViewById(R.id.adapter_product_name);
+		TextView mCategoryNameTextView = (TextView) convertView.findViewById(R.id.adapter_product_value);
+		TextView mPriceTextView = (TextView) convertView.findViewById(R.id.adapter_product_price);
+		TextView mOldPriceTextView = (TextView) convertView.findViewById(R.id.adapter_product_old_price);
+		
+		setContentView(mList.get(position).getImageModel().getThumbImageUrl(), mBackgroundImageView);		
+		
 		mTitleTextView.setText(mList.get(position).getProductName());
+		mCategoryNameTextView.setText(ZunniApplication.getmAppPreferences().getString(ZunniConstants.SELECTED_CATEGORY_NAME, ""));
+		mPriceTextView.setText(mList.get(position).getProductPrice().getPrice());
+		mOldPriceTextView.setPaintFlags(mOldPriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+		mOldPriceTextView.setText(mList.get(position).getProductPrice().getmProductOldPrice());
 		
 		convertView.setTag(position);
 		convertView.setOnClickListener(this);
@@ -72,7 +83,7 @@ public class AdapterProductList extends BaseAdapter implements OnClickListener {
 		ZunniApplication.getmCacheManager().load(Uri.parse(url)).into(mFirstImageView);
 	}
 	
-	public void notifyListChanged(List<BeanProductDetail> mAllProductsList2) {
+	public void notifyListChanged(List<BeanProductForCategory> mAllProductsList2) {
 		this.mList = mAllProductsList2;
 		notifyDataSetChanged();
 	}
@@ -81,9 +92,9 @@ public class AdapterProductList extends BaseAdapter implements OnClickListener {
 	public void onClick(View v) 
 	{
 		Integer tag = (Integer) v.getTag();
-		Intent intent = new Intent(mActivity, ActivityProductReview.class);
-		ActivityProductReview.mProductBean = mList.get(tag);
 		
+		Intent intent = new Intent(mActivity, ActivityProductReview.class);
+		intent.putExtra("productId", mList.get(tag).getmProductId());
 		mActivity.startActivity(intent);
 	}
 }

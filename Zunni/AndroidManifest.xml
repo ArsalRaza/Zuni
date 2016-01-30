@@ -22,11 +22,7 @@
             android:name=".ActivityMainCategory"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         
         <activity
@@ -35,9 +31,24 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name=".ActivityFullScreenImage"
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name=".ActivityProductList"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ActivityLogin"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+                        <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ActivityProductReview"

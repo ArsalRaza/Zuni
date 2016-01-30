@@ -4,7 +4,7 @@ import java.util.List;
 
 import sa.etrendz.zunni.adapter.AdapterProductList;
 import sa.etrendz.zunni.asynctask.AsynctaskGetCategoryDetail;
-import sa.etrendz.zunni.bean.BeanProductDetail;
+import sa.etrendz.zunni.bean.BeanProductForCategory;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ public class ActivityProductList extends AppCompatActivity
 {
 	private GridView mGridView;
 	private String mCategoryId;
-	private List<BeanProductDetail> mAllProductsList;
+	private List<BeanProductForCategory> mAllProductsList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -67,7 +67,7 @@ public class ActivityProductList extends AppCompatActivity
 		supportToolBar.setTitle(ZunniApplication.getmAppPreferences().getString(ZunniConstants.SELECTED_CATEGORY_NAME, ""));
 	}
 	
-	public void updateProducts(List<BeanProductDetail> mAllProductsList2) 
+	public void updateProducts(List<BeanProductForCategory> mAllProductsList2) 
 	{
 		if (mAllProductsList2 == null)
 			return;

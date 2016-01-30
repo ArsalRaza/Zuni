@@ -1,36 +1,15 @@
 package sa.etrendz.zunni.bean;
 
+import java.util.ArrayList;
 
 public class BeanProductDetail 
 {
-	private String Name, ShortDescription, FullDescription, Id, SeName;
+	private ArrayList<BeanServerImage> PictureModels;
+	
+	private String Name, ShortDescription, FullDescription, MetaKeywords, MetaDescription, MetaTitle, SeName
+	,Id;
+	
 	private BeanProductPrice ProductPrice;
-	private BeanServerImage DefaultPictureModel;
-	private BeanReviewModel ReviewOverviewModel;
-	
-	public BeanServerImage getImageModel() {
-		return DefaultPictureModel;
-	}
-	
-	public void setImageModel(BeanServerImage defaultPictureModel) {
-		DefaultPictureModel = defaultPictureModel;
-	}
-	
-	public String getProductName() {
-		return Name;
-	}
-	
-	public void setProductName(String name) {
-		Name = name;
-	}
-	
-	public BeanProductPrice getProductPrice() {
-		return ProductPrice;
-	}
-	
-	public void setProductPrice(BeanProductPrice productPrice) {
-		ProductPrice = productPrice;
-	}
 
 	public String getmProductId() {
 		return Id;
@@ -38,5 +17,29 @@ public class BeanProductDetail
 
 	public void setmProductId(String id) {
 		Id = id;
+	}
+
+	public BeanProductPrice getProductPrice() {
+		return ProductPrice;
+	}
+
+	public void setProductPrice(BeanProductPrice productPrice) {
+		ProductPrice = productPrice;
+	}
+
+	public ArrayList<BeanServerImage> getmProductImageModel() {
+		return PictureModels;
+	}
+
+	public void setmProductImageModel(ArrayList<BeanServerImage> pictureModels) {
+		PictureModels = pictureModels;
+	}
+
+	public String getmProductName() {
+		return Name;
+	}
+
+	public void setmProductName(String name) {
+		Name = name;
 	}
 }

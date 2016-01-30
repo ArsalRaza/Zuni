@@ -14,4 +14,12 @@ public class BeanProductPrice
 	public void setPrice(String price) {
 		Price = price;
 	}
+
+	public String getmProductOldPrice() {
+		return OldPrice;
+	}
+
+	public void setmProductOldPrice(String oldPrice) {
+		OldPrice = oldPrice;
+	}
 }
