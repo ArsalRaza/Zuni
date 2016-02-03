@@ -15,7 +15,6 @@ import sa.etrendz.zunni.bean.CategoryDetailBean;
 import sa.etrendz.zunni.network.GetPostSender;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;

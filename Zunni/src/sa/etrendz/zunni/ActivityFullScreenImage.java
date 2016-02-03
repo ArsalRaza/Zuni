@@ -18,6 +18,7 @@ public class ActivityFullScreenImage extends AppCompatActivity implements OnClic
 	private String mImageUrl;
 	private ProgressBar mProgressBar;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{

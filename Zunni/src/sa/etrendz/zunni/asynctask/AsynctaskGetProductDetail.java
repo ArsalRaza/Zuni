@@ -2,16 +2,15 @@ package sa.etrendz.zunni.asynctask;
 
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
-import android.app.Activity;
-import android.widget.Toast;
 import sa.etrendz.zunni.ActivityProductReview;
 import sa.etrendz.zunni.base.BaseAsynctask;
 import sa.etrendz.zunni.bean.BeanProductDetail;
-import sa.etrendz.zunni.bean.CategoryDetailBean;
 import sa.etrendz.zunni.network.GetPostSender;
 import sa.etrendz.zunni.utils.ZunniConstants;
+import android.app.Activity;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 public class AsynctaskGetProductDetail extends BaseAsynctask {
 
