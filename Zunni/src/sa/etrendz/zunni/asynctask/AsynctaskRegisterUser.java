@@ -42,6 +42,7 @@ public class AsynctaskRegisterUser extends BaseAsynctask
 			editor.putString(ZunniConstants.USER_NAME_PREFS_KEY, mUserName);
 			editor.putString(ZunniConstants.USER_EMAIL_PREFS_KEY, mUserEmail);
 			editor.putString(ZunniConstants.USER_PASSWORD_PREFS_KEY, mUserPassword);
+			editor.putString(ZunniConstants.IS_USER_LOGGED_IN, "true");
 			editor.commit();
 		}
 		else

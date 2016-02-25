@@ -8,6 +8,7 @@ import java.net.URL;
 
 public class NetworkUtils 
 {
+	private static final String COOKIES_HEADER = "Set-Cookie";
 	public final String UTF8 = "UTF-8";
 
 	public final String HTTP_GET = "GET";
@@ -35,7 +36,13 @@ public class NetworkUtils
 
 
 	public String mBoundary = END_REQUEST + END_REQUEST + "WebKitFormBoundaryflDIl9j7fMbC5CDw";
+	public CookieManager mCookieManager;
 
+	public NetworkUtils()
+	{
+		this.mCookieManager = new CookieManager();
+	}
+	
 	public HttpURLConnection getUrlConnection(String URL, String httpMethod,
 			String contenttype, String boundry) throws Exception 
 	{
@@ -65,6 +72,7 @@ public class NetworkUtils
 		
 		//Melltoo Header
 		urlConnection.setRequestProperty("version", "1");
+		mCookieManager.setCookies(urlConnection);
 		
 		return urlConnection;
 	}
@@ -72,6 +80,8 @@ public class NetworkUtils
 	public String getResponse(HttpURLConnection urlConnection) throws Exception 
 	{
 		String response = "";
+		mCookieManager.storeCookies(urlConnection);
+		
 		int status = urlConnection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK)
         {
@@ -91,4 +101,5 @@ public class NetworkUtils
         }
 		return response;
 	}
+	
 }

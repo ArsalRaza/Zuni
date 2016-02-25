@@ -49,7 +49,7 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 	@Override
 	public int getCount() 
 	{
-		return mCategoryList.size() / 3;
+		return (mCategoryList.size() % 3 == 0) ? mCategoryList.size() / 3 : (mCategoryList.size() / 3) + 1;
 	}
 
 	@Override
@@ -79,10 +79,21 @@ public class AdapterViewPagerMainCategory extends PagerAdapter implements Callba
 		CardView mSecondLayout = (CardView) view.findViewById(R.id.adapter_category_sec_image_layout);
 		CardView mThirdLayout = (CardView) view.findViewById(R.id.adapter_category_third_image_layout);
 	
-		int firstBean = position;
-		int secondBean = position + 1;
-		int thirdBean = position + 2;
-		
+		int firstBean /*= position*/;
+		int secondBean /*= position + 1*/;
+		int thirdBean /*= position + 2*/;
+		if (position == 0)
+		{
+			firstBean = position;
+			secondBean = position + 1;
+			thirdBean = position + 2;
+		}
+		else
+		{
+			firstBean = position + 2;
+			secondBean = firstBean + 1;
+			thirdBean = firstBean + 2;
+		}
 		int beanSize = mCategoryList.size();
 		
 		if (firstBean < beanSize)

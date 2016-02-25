@@ -14,10 +14,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,12 +31,17 @@ public class SubCategoryAdapter extends BaseAdapter implements Callback, OnClick
 	private List<BeanSubCategoryProductForAdapter> mCategoryDetailBean;
 	private Activity mActivity;
 	private LayoutInflater mLayoutInflater;
+	private int mHeight;
 
 	public SubCategoryAdapter(Activity activitySubCategoryProducts, List<BeanSubCategoryProductForAdapter> mCategoryDetailBean) 
 	{
 		this.mActivity = activitySubCategoryProducts;
 		mLayoutInflater = (LayoutInflater) activitySubCategoryProducts.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.mCategoryDetailBean = mCategoryDetailBean;
+		
+		WindowManager wm = (WindowManager) mActivity.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		this.mHeight = display.getHeight() / 2;
 	}
 
 	@Override
@@ -60,22 +67,29 @@ public class SubCategoryAdapter extends BaseAdapter implements Callback, OnClick
 	{
 		if (convertView == null)
 		{
-			convertView = mLayoutInflater.inflate(R.layout.adapter_sub_category, null);
+			convertView = mLayoutInflater.inflate(R.layout.adapter_sub_category, parent, false);
+			ViewGroup.LayoutParams params = convertView.getLayoutParams();
+			params.height = mHeight;
+			convertView.setLayoutParams(params);
 		}
 		
 		ImageView mBackgroundImageView = (ImageView) convertView.findViewById(R.id.adapter_sub_category_product_back_imgview);
+		
 		TextView mTitleTextView = (TextView) convertView.findViewById(R.id.adapter_sub_category_product_title_textview);
+		TextView mCategoryNameTextView = (TextView) convertView.findViewById(R.id.adapter_sub_category_title_textview);
 		
 		BeanSubCategoryProductForAdapter mAdapterBean = mCategoryDetailBean.get(position);
+		
 		String url = "", title = "";
 		if (mAdapterBean.ismIsSubCategoryObject())
 		{
 			// For Sub Category
 			BeanGetAllCategory bean = (BeanGetAllCategory) mAdapterBean.getmBean();
 			url = bean.getImageModel().getThumbImageUrl();
-			title = bean.getmCategoryName() + "(Category)";
+			title = bean.getmCategoryName()/* + "(Category)"*/;
 		}
 		
+		mCategoryNameTextView.setText(ZunniApplication.getmAppPreferences().getString(ZunniConstants.SELECTED_CATEGORY_NAME, ""));
 		mTitleTextView.setText(title);
 		setContentView(url, mBackgroundImageView);
 		convertView.setTag(position);
@@ -86,7 +100,7 @@ public class SubCategoryAdapter extends BaseAdapter implements Callback, OnClick
 	
 	private void setContentView(String url, ImageView mFirstImageView) 
 	{
-		ZunniApplication.getmCacheManager().load(Uri.parse(url)).into(mFirstImageView, this);
+		ZunniApplication.getmCacheManager().load(Uri.parse(url)).fit().into(mFirstImageView, this);
 	}
 	
 	public void notifyListDataChanged(List<BeanSubCategoryProductForAdapter> mCategoryDetailBean2) {

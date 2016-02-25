@@ -1,12 +1,15 @@
 package sa.etrendz.zunni.asynctask;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import sa.etrendz.zunni.base.BaseAsynctask;
 import sa.etrendz.zunni.bean.BeanGetAllCategory;
 import sa.etrendz.zunni.fragment.FragmentHomeCategory;
 import sa.etrendz.zunni.network.GetPostSender;
+import sa.etrendz.zunni.utils.ZuniUtils;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -24,9 +27,9 @@ public class AsyncTaskGetAllCategories extends BaseAsynctask
 	{
 		super(activity);
 		mFromWhere = fromWhere;
+		mBeanGetAllCategories = new ArrayList<BeanGetAllCategory>();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected String doInBackground(String... params) 
 	{
@@ -36,11 +39,29 @@ public class AsyncTaskGetAllCategories extends BaseAsynctask
 		if (checkPoint.equalsIgnoreCase(""))
 		{
 			try
-			{ 
+			{
 				Gson gson = new Gson();
 				Type type = new TypeToken<List<BeanGetAllCategory>>(){}.getType();
-				mBeanGetAllCategories = (List<BeanGetAllCategory>) gson.fromJson(response, type);
-			}
+				@SuppressWarnings("unchecked")
+				List<BeanGetAllCategory> mBeanGetAllCategories1 = (List<BeanGetAllCategory>) gson.fromJson(response, type);
+				
+				Iterator<BeanGetAllCategory> iterable = mBeanGetAllCategories1.iterator();
+		        while (iterable.hasNext())
+		        {
+		        	BeanGetAllCategory beanGetAllCategory = iterable.next();
+					if (beanGetAllCategory.getmHasSubCategory().equalsIgnoreCase("false"))
+					{
+						ZuniUtils.LogEvent(beanGetAllCategory.getmCategoryName());
+						iterable.remove();
+					}
+					else
+					{
+						ZuniUtils.LogEvent(beanGetAllCategory.getmCategoryName() + "/adding");
+						mBeanGetAllCategories.add(beanGetAllCategory);
+					}
+		        }
+		        mBeanGetAllCategories1.clear();
+		    }
 			catch (Exception exce)
 			{
 				exce.printStackTrace();

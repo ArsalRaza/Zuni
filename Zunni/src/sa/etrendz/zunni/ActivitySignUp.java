@@ -1,73 +1,113 @@
 package sa.etrendz.zunni;
 
-import java.util.Calendar;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import sa.etrendz.zunni.asynctask.AsynctaskRegisterUser;
 import sa.etrendz.zunni.utils.SystemIntents;
 import sa.etrendz.zunni.utils.ZuniUtils;
-import android.app.DatePickerDialog.OnDateSetListener;
+import sa.etrendz.zunni.view.RoundedImageView;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
-public class ActivitySignUp extends AppCompatActivity implements OnClickListener, OnDateSetListener, com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener 
+ public class ActivitySignUp extends AppCompatActivity implements OnClickListener
 {
-	private Button mSignUpButton;
+	private TextView mSignUpButton;
 	private EditText mPasswordEditText;
 	private EditText mEmailEditText;
 	private EditText mUserNameEditText;
-	private ImageView mFullImageView;
+	private RoundedImageView mFullImageView;
 	private Uri mImageUri;
 	private String mEmail;
 	private String mPassword;
 	private String mUserName;
-	private ImageView mTakeImageView;
-	private TextView mDateOfBirthEditText;
+	private CallbackManager mCallbackManager;
+	private TextView mFacebookButton;
 
+	@SuppressWarnings("deprecation")
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_registration);
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.activity_registration_toolbar);
-//		toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.backbutton_actionbar));
+		toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.backbutton_actionbar));
+
+		mCallbackManager = CallbackManager.Factory.create();
+
 		setSupportActionBar(toolbar);
-		
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				finish();
+			}
+		});
 		ActionBar supportToolBar = getSupportActionBar();
 		supportToolBar.setDisplayShowTitleEnabled(true);
 		supportToolBar.setTitle("Registration");
-
+		try {
+		    PackageInfo info = getPackageManager().getPackageInfo(
+		                           getPackageName(),
+		                           PackageManager.GET_SIGNATURES);
+		    for (Signature signature : info.signatures) {
+		        MessageDigest md = MessageDigest.getInstance("SHA");
+		        md.update(signature.toByteArray());
+		        Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+		    }
+		}
+		catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 		InitUI();
-    }
+	}
 
 	private void InitUI() 
 	{
-		mSignUpButton = (Button) findViewById(R.id.activity_registration_register);
+		mSignUpButton = (TextView) findViewById(R.id.activity_registration_register_btn);
+		mFacebookButton = (TextView) findViewById(R.id.activity_registration_facebook_btn);
 		
-		mFullImageView = (ImageView) findViewById(R.id.activity_registration_full_img);
-		mTakeImageView = (ImageView) findViewById(R.id.activity_registration_take_img);
+		mFullImageView = (RoundedImageView) findViewById(R.id.activity_registration_full_img);
 		
 		mUserNameEditText = (EditText) findViewById(R.id.activity_registration_username);
 		mEmailEditText = (EditText) findViewById(R.id.activity_registration_email);
 		mPasswordEditText = (EditText) findViewById(R.id.activity_registration_password);
-		mDateOfBirthEditText = (TextView) findViewById(R.id.activity_registration_dob);
 		
-		mDateOfBirthEditText.setOnClickListener(this);
 		mSignUpButton.setOnClickListener(this);
-		mTakeImageView.setOnClickListener(this);
+		mFacebookButton.setOnClickListener(this);
+		mFullImageView.setOnClickListener(this);
+
 	}
 
 	@Override
@@ -75,39 +115,79 @@ public class ActivitySignUp extends AppCompatActivity implements OnClickListener
 	{
 		switch (v.getId())
 		{
-		case R.id.activity_registration_register:
+		case R.id.activity_registration_register_btn:
 			registerUser();
 			break;
-		case R.id.activity_registration_dob:
-		    Calendar now = Calendar.getInstance();
-	        DatePickerDialog dpd = DatePickerDialog.newInstance(
-	                ActivitySignUp.this,
-	                now.get(Calendar.YEAR),
-	                now.get(Calendar.MONTH),
-	                now.get(Calendar.DAY_OF_MONTH)
-	        );
-	        
-	        dpd.setThemeDark(false);
-	        dpd.vibrate(true);
-	        dpd.dismissOnPause(true);
-	        dpd.showYearPickerFirst(true);
-	        dpd.setAccentColor(Color.parseColor("#9C27B0"));
-	        dpd.setTitle("DatePicker Title");
-	        dpd.show(getFragmentManager(), "Datepickerdialog");
+		
+		case R.id.activity_registration_facebook_btn:
+			registerWithFacebook();
 			break;
-			
-		case R.id.activity_registration_take_img:
+				
+		case R.id.activity_registration_full_img:
 			takeImage();
 			break;		
 		}
 	}
 
+	private void registerWithFacebook() 
+	{
+
+//		SocialMediaSignIn.facebookSignIn(this, mCallbackManager);
+		LoginManager.getInstance().registerCallback(mCallbackManager,
+	            new FacebookCallback<LoginResult>() 
+	            {
+	                @Override
+	                public void onSuccess(LoginResult loginResult) {
+	                    // App code
+	                	GraphRequest request = GraphRequest.newMeRequest(
+	                            loginResult.getAccessToken(),
+	                            new GraphRequest.GraphJSONObjectCallback() {
+	                                @Override
+	                                public void onCompleted(
+	                                        JSONObject object,
+	                                        GraphResponse response) {
+	                                    // Application code
+	                                	JSONObject object2 = response.getJSONObject();
+	                                	ZuniUtils.LogEvent(response.toString());
+	                                	try 
+	                                	{
+											new AsynctaskRegisterUser(ActivitySignUp.this, object2.getString("email"), object2.getString("id"), object2.getString("name"), null).execute();
+										}
+	                                	catch (JSONException e) 
+										{
+											e.printStackTrace();
+										}
+	                                }
+	                            });
+
+	                	Bundle parameters = new Bundle();
+	                    parameters.putString("fields", "id,name,email,gender, birthday");
+	                    request.setParameters(parameters);
+	                    request.executeAsync();
+	                
+	                }
+
+	                @Override
+	                public void onCancel() {
+	                     // App code
+//	                	Log.e("error", exception.getLocalizedMessage());
+	                }
+
+	                @Override
+	                public void onError(FacebookException exception) {
+	                     // App code  
+	                	Log.e("error", exception.getLocalizedMessage());
+	                }
+	    });
+		LoginManager.getInstance().logInWithReadPermissions(ActivitySignUp.this, Arrays.asList("public_profile", "email", "user_friends"));
+	}
+	
 	private void takeImage()
 	{
 		SystemIntents.pickImageIntent(ActivitySignUp.this);
 	}
 	
-	private void registerUser() 
+	private void registerUser()
 	{
 		if (ZuniUtils.isNetworkAvailable(getApplicationContext()))
 		{
@@ -164,6 +244,7 @@ public class ActivitySignUp extends AppCompatActivity implements OnClickListener
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
+		mCallbackManager.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK)
 		{
 			if (SystemIntents.SYSTEM_INTENT_GALLERY_REQUEST_CODE == requestCode)
@@ -175,25 +256,11 @@ public class ActivitySignUp extends AppCompatActivity implements OnClickListener
 //					ZunniApplication.getmCacheManager().load(path).fit().into(mFullImageView);
 					mFullImageView.setImageURI(path);
 				}
-			}
+			 }
 		}
 		else
 		{
 			ZuniUtils.LogEvent("Operation not selected");
 		}
-	}
-
-	@Override
-	public void onDateSet(DatePicker view, int year, int monthOfYear,
-			int dayOfMonth) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onDateSet(DatePickerDialog view, int year, int monthOfYear,
-			int dayOfMonth) {
-		// TODO Auto-generated method stub
-		
 	}
 }

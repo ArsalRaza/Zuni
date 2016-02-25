@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/registration_background"
+    android:padding="@dimen/margin_10" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/margin_50" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/login_logo" />
+		        
+	    <android.support.design.widget.TextInputLayout
+	        android:id="@+id/first"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:theme="@style/login__edittext"
+	        android:layout_below="@id/imageView1"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="@dimen/margin_10">
+	        
+	        <android.support.v7.widget.AppCompatEditText
+	            android:id="@+id/activity_login_email_edittext"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:hint="Email"
+	            android:textColor="#ffffff"
+	            android:inputType="textEmailAddress" >
+	
+	            <requestFocus />
+		    </android.support.v7.widget.AppCompatEditText>
+		</android.support.design.widget.TextInputLayout>
+	    
+	    <android.support.design.widget.TextInputLayout
+	        android:id="@+id/second"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:theme="@style/login__edittext"
+	        android:layout_below="@id/first"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="@dimen/margin_10">
+	    
+	        <android.support.v7.widget.AppCompatEditText
+	            android:id="@+id/activity_login_password_edittext"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_below="@id/first"
+	            android:textColor="#ffffff"
+	            android:layout_centerHorizontal="true"
+	            android:layout_marginTop="@dimen/margin_10"
+	            android:ems="10"
+	            android:hint="Password"
+	            android:inputType="textPassword" >
+	        </android.support.v7.widget.AppCompatEditText>
+		</android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/activity_login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/second"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_10"
+            android:background="@drawable/rounded_pink"
+            android:ems="10"
+            android:text="Login"
+            android:textColorHint="@android:color/white" >
+        </Button>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/activity_login_join_us"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/activity_login_join_now" />
+
+</RelativeLayout>

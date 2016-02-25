@@ -10,6 +10,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.facebook.FacebookSdk;
 import com.squareup.picasso.Picasso;
 
 @ReportsCrashes(mailTo = "shaikh.ahmed1972@gmail.com", // my email here
@@ -27,6 +28,8 @@ public class ZunniApplication extends Application
 		Log.e("App", "Created");
 		
 		ACRA.init(this);
+		FacebookSdk.sdkInitialize(getApplicationContext());
+		
 		setmCacheManager(Picasso.with(getApplicationContext()));
 		setmAppPreferences(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 	}

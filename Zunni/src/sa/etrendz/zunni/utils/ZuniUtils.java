@@ -1,5 +1,8 @@
 package sa.etrendz.zunni.utils;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import sa.etrendz.zunni.R;
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +22,11 @@ public class ZuniUtils {
 			Log.e("Zuni:", logstring);
 		}
 	}
-
+//	public static <T> ArrayList<T> toArrayList(final Iterator<T> iterator)
+//	{
+//	    return StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false)
+//	                        .collect(Collectors.toCollection(ArrayList::new));
+//	}
 	public static boolean isNetworkAvailable(Context context)
 	{
 		final ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

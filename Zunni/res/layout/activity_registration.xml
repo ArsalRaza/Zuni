@@ -1,19 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-	<RelativeLayout
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+    
+	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:background="@android:color/white">
+	    android:orientation="vertical">
 	    
 		<include 
 		    android:id="@+id/activity_registration_toolbar"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
 		    layout="@layout/toolbar_signup"/>
+		
+		<RelativeLayout
+		    android:id="@+id/activity_registration_image_layout"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+	    	android:padding="@dimen/margin_20" >
+				
+			<sa.etrendz.zunni.view.RoundedImageView
+			    android:id="@+id/activity_registration_full_img"
+			    android:layout_width="130dp"
+			    android:layout_height="130dp"
+			    android:contentDescription="@string/app_name"
+			    android:scaleType="centerCrop"
+			    android:src="@drawable/registration_add_photo"/>
+			
+			 <android.support.design.widget.TextInputLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:theme="@style/login_edittext"
+		        android:layout_centerVertical="true"
+		        android:layout_toRightOf="@id/activity_registration_full_img"
+		        android:layout_alignLeft="@dimen/margin_15">
+		        
+		        <android.support.v7.widget.AppCompatEditText
+		            android:id="@+id/activity_registration_fullname"
+		             android:layout_width="match_parent"
+		             android:layout_height="wrap_content"
+		             android:hint="Full name"
+		             android:textColor="@android:color/black"
+		             android:textSize="15sp"/>
+		   
+		   </android.support.design.widget.TextInputLayout>
+		   
+		</RelativeLayout>
+		<LinearLayout 
+		    android:id="@+id/activity_registration_edittext_layout"
+		    android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_marginTop="@dimen/margin_10"
+			android:layout_centerHorizontal="true"
+			android:layout_below="@id/activity_registration_image_layout">
+		    
+	 	    <android.support.design.widget.TextInputLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:theme="@style/login_edittext"
+		        android:padding="@dimen/margin_10">
+		        
+		        <android.support.v7.widget.AppCompatEditText
+		            android:id="@+id/activity_registration_username"
+		             android:layout_width="match_parent"
+		             android:layout_height="wrap_content"
+		             android:hint="Username"
+		             android:textColor="@android:color/black"
+		             android:textSize="15sp"/>
+		   
+		   </android.support.design.widget.TextInputLayout>
+		   
+		   <android.support.design.widget.TextInputLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:theme="@style/login_edittext"
+		        android:padding="@dimen/margin_10">
+		        
+		        <android.support.v7.widget.AppCompatEditText
+		             android:id="@+id/activity_registration_email"
+		             android:layout_width="match_parent"
+		             android:layout_height="wrap_content"
+		             android:hint="Email"
+		             android:textColor="@android:color/black"
+		             android:inputType="textEmailAddress"
+		             android:textSize="15sp"/>
+		   
+		   </android.support.design.widget.TextInputLayout>
+		   
+	 	    <android.support.design.widget.TextInputLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:theme="@style/login_edittext"
+		        android:layout_margin="@dimen/margin_10">
+		        
+		        <android.support.v7.widget.AppCompatEditText
+		             android:id="@+id/activity_registration_password"
+		             android:layout_width="match_parent"
+		             android:layout_height="wrap_content"
+		             android:hint="Password"
+		             android:inputType="textPassword"
+		             android:textColorHint="@android:color/black"
+		             android:textSize="15sp"/>
+		        
+			</android.support.design.widget.TextInputLayout>
+		</LinearLayout>
+
+		<TextView
+		    android:id="@+id/activity_registration_register_btn"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:background="@drawable/rounded_pink"
+		    android:padding="@dimen/margin_10"
+		    android:layout_marginTop="@dimen/margin_10"
+		    android:layout_marginLeft="@dimen/margin_5"
+		    android:layout_marginRight="@dimen/margin_5"
+		    android:gravity="center"
+		    android:text="Register" />
+		
+		<TextView
+		    android:id="@+id/activity_registration_facebook_btn"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:background="@drawable/rounded_blue"
+		    android:padding="@dimen/margin_10"
+		    android:layout_marginLeft="@dimen/margin_5"
+		    android:layout_marginRight="@dimen/margin_5"
+		    android:layout_marginBottom="@dimen/margin_5"
+		    android:layout_marginTop="@dimen/margin_10"
+		    android:gravity="center"
+		    android:text="Register with Facebook" />
+		
+	</LinearLayout>
 	
-		<RelativeLayout 
+		<!-- <RelativeLayout 
 		    android:id="@+id/activity_registration_image_layout"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
@@ -120,6 +242,5 @@
 		    android:layout_below="@id/activity_registration_edittext_layout"
 		    android:layout_centerHorizontal="true"
 		    android:background="@color/price_tag_pink"
-		    android:text="Register" />
-	</RelativeLayout>
+		    android:text="Register" /> -->
 </ScrollView>

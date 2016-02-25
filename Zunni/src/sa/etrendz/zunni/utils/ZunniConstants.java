@@ -13,5 +13,6 @@ public class ZunniConstants
 	public static final String USER_EMAIL_PREFS_KEY = "USER_EMAIL_KEY";
 	public static final String USER_PASSWORD_PREFS_KEY = "USER_PASSWORD_KEY";
 	public static final String USER_NAME_PREFS_KEY = "USER_NAME_KEY";
-	public static final String LOGIN_URL = "LoginUser";
+	public static final String LOGIN_URL = "Customer/LoginUser";
+	public static final String IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
 }

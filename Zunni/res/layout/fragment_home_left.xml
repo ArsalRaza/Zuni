@@ -1,12 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ripple="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black" >
-    
-    <ListView 
-        android:id="@+id/home_left_side_listview"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"/>
-        
+    android:background="@android:color/white" >
+
+	<RelativeLayout 
+        android:id="@+id/frag_left_menu_user_details"
+        android:layout_width="match_parent"
+	  	android:layout_height="wrap_content"
+	   	android:background="@color/dark_black_trancparency"
+	   	android:padding="@dimen/margin_20">
+
+		<ImageView
+		    android:id="@+id/frag_left_menu_user_imgview"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/app_name"
+			android:src="@drawable/login_logo" />
+
+		<RelativeLayout 
+	        android:layout_width="match_parent"
+		  	android:layout_height="wrap_content"
+			android:layout_marginLeft="@dimen/margin_20"
+			android:layout_centerVertical="true"
+		    android:layout_toRightOf="@id/frag_left_menu_user_imgview">
+					
+			<TextView
+			    android:id="@+id/frag_left_username_txtview"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:contentDescription="@string/app_name"
+			    android:text="Arsal Raza Imam"
+			    android:textStyle="bold"
+			    android:textColor="@color/price_tag_pink"
+			    android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+			<TextView
+			    android:id="@+id/frag_left_member_type_txtview"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignLeft="@+id/frag_left_username_txtview"
+			    android:layout_below="@id/frag_left_username_txtview"
+			    android:contentDescription="@string/app_name"
+			    android:text="Gold member"
+			    android:textColor="@android:color/white"/>
+		</RelativeLayout>
+	</RelativeLayout>
+	
+	<LinearLayout 
+	    android:id="@+id/frag_left_member_views_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_below="@+id/frag_left_menu_user_details"
+		android:layout_marginTop="@dimen/margin_30">
+		
+	    <com.andexert.library.RippleView
+			android:id="@+id/frag_left_menu_myfeed_rpview"
+       		android:layout_width="match_parent"
+       		android:layout_height="40dp"
+		    ripple:rv_type="rectangle">
+			
+			<TextView
+				android:id="@+id/frag_left_menu_myfeed_txtview"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:paddingLeft="@dimen/margin_30"
+			    android:gravity="center_vertical"
+			    android:contentDescription="@string/app_name"
+			    android:text="My Feed"
+			    android:textColor="@color/light_white_black"/>
+		
+		</com.andexert.library.RippleView>
+	    
+	    <com.andexert.library.RippleView 
+			android:id="@+id/frag_left_menu_my_interest_rpview"
+			android:layout_width="match_parent"
+       		android:layout_height="40dp"
+		    ripple:rv_type="rectangle">
+			
+	        <TextView
+			    android:id="@+id/frag_left_menu_my_interest_txtview"
+				android:layout_width="match_parent"
+			    android:layout_height="40dp"
+			    android:paddingLeft="@dimen/margin_30"
+			    android:gravity="center_vertical"
+			    android:contentDescription="@string/app_name"
+			    android:text="My Interest"
+			    android:textColor="@color/light_white_black"/>
+	    </com.andexert.library.RippleView>
+	    
+	    <com.andexert.library.RippleView 
+		    android:id="@+id/frag_left_menu_my_collection_rpview"
+       		android:layout_width="match_parent"
+       		android:layout_height="40dp"
+		    ripple:rv_type="rectangle">
+		    		
+			<TextView
+			    android:id="@+id/frag_left_menu_my_collection_txtview"
+       			android:layout_width="match_parent"
+			    android:layout_height="40dp"
+			    android:paddingLeft="@dimen/margin_30"
+			    android:gravity="center_vertical"
+			    android:contentDescription="@string/app_name"
+			    android:text="My Collection"
+			    android:textColor="@color/price_tag_pink"/>
+	   	</com.andexert.library.RippleView>
+	</LinearLayout>
+	
+	<LinearLayout 
+	    android:id="@+id/frag_left_member_account_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:layout_below="@+id/frag_left_member_views_layout"
+		android:layout_marginTop="100dp"
+		android:layout_marginLeft="@dimen/margin_30">
+		
+		<TextView
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/app_name"
+		    android:text="Account"
+		    android:textStyle="bold"
+		    android:textColor="@android:color/black"/>
+		
+		<TextView
+		    android:id="@+id/frag_left_menu_invitefriend_txtview"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/app_name"
+		    android:text="Invite Friends"
+		    android:layout_marginTop="@dimen/margin_10"
+		    android:textColor="@color/light_white_black"/>
+		
+		<TextView
+		    android:id="@+id/frag_left_menu_feedback_txtview"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/app_name"
+		    android:layout_marginTop="@dimen/margin_10"
+		    android:text="Feedback"
+		    android:textColor="@color/light_white_black"/>
+		
+		<TextView
+		    android:id="@+id/frag_left_menu_help_txtview"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/app_name"
+		    android:layout_marginTop="@dimen/margin_10"
+		    android:text="Help"
+		    android:textColor="@color/light_white_black"/>
+	</LinearLayout>
 </RelativeLayout>

@@ -2,9 +2,9 @@ package sa.etrendz.zunni;
 
 import sa.etrendz.zunni.fragment.FragmentHomeCategory;
 import sa.etrendz.zunni.fragment.FragmentLeftSideMenu;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -13,18 +13,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 
-
 public class ActivityMainCategory extends AppCompatActivity implements OnClickListener
 {
 
 	private FragmentManager mFragmentManager;
-//	private Fragment mCurrentFragment;
 	private FragmentHomeCategory mHomeFragment;
 	private FragmentLeftSideMenu mLeftSideFragment;
 	private FrameLayout mLeftSideContainer;
-//	private FrameLayout mMainContainer;
 	private DrawerLayout mDrawerLayout;
-//	private ImageView mNavToggleButton;
 	private boolean mIsOpened = false;
 
 	@Override
@@ -42,7 +38,8 @@ public class ActivityMainCategory extends AppCompatActivity implements OnClickLi
 		setActionBar();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+//		mDrawerLayout.setScrimColor(Color.TRANSPARENT);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		
 		if (mHomeFragment == null)
 			mHomeFragment = new FragmentHomeCategory();
@@ -84,7 +81,7 @@ public class ActivityMainCategory extends AppCompatActivity implements OnClickLi
 	{
 		switch (v.getId())
 		{
-		
+			
 		}
 	}
 

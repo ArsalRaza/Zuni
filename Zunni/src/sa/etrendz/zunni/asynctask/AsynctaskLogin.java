@@ -3,9 +3,11 @@ package sa.etrendz.zunni.asynctask;
 import org.json.JSONObject;
 
 import sa.etrendz.zunni.ActivityMainCategory;
+import sa.etrendz.zunni.R;
 import sa.etrendz.zunni.ZunniApplication;
 import sa.etrendz.zunni.base.BaseAsynctask;
 import sa.etrendz.zunni.network.GetPostSender;
+import sa.etrendz.zunni.utils.ZuniUtils;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.app.Activity;
 import android.content.Intent;
@@ -32,20 +34,30 @@ public class AsynctaskLogin extends BaseAsynctask
 		{
 			try
 			{
-				Editor editor = ZunniApplication.getmAppPrefEditor()/*.putString("", "")*/;
-				editor.putString(ZunniConstants.USER_EMAIL_PREFS_KEY, mUserEmail);
-				editor.commit();
+				JSONObject jsonObject = new JSONObject(response);
+				if (jsonObject.getString("Code").equalsIgnoreCase("100"))
+				{
+					Editor editor = ZunniApplication.getmAppPrefEditor()/*.putString("", "")*/;
+					editor.putString(ZunniConstants.USER_EMAIL_PREFS_KEY, mUserEmail);
+					editor.putString(ZunniConstants.IS_USER_LOGGED_IN, "true");
+					editor.commit();
+					return "";
+				}
+				else
+				{
+					return "Oops...! You entered wrong credentials, please check your email and password.";
+				}
 			}
 			catch (Exception exce)
 			{
 				exce.printStackTrace();
+				return "Invalid response is coming from the server...!";
 			}
 		}
 		else
 		{
 			return checkPoint;
 		}
-		return "";
 	}
 
 	private String obtainResponseFromService() 
@@ -55,7 +67,7 @@ public class AsynctaskLogin extends BaseAsynctask
 		JSONObject jsonObject = new JSONObject();
 		try 
 		{
-			jsonObject.put("UserEmail", mUserEmail);
+			jsonObject.put("Email", mUserEmail);
 			jsonObject.put("Password", mUserPassword);
 			
 			response = new GetPostSender().sendPostJSON(ZunniConstants.LOGIN_URL, jsonObject.toString());
@@ -71,8 +83,15 @@ public class AsynctaskLogin extends BaseAsynctask
 	@Override
 	protected void onComplete(String output) 
 	{
-		Intent intent = new Intent(mActivity, ActivityMainCategory.class);
-		mActivity.startActivity(intent);
-		mActivity.finish();		
+		if (output.equalsIgnoreCase(""))
+		{
+			Intent intent = new Intent(mActivity, ActivityMainCategory.class);
+			mActivity.startActivity(intent);
+			mActivity.finish();
+		}
+		else
+		{
+			ZuniUtils.showMsgDialog(mActivity, mActivity.getString(R.string.app_name), output, null, null);
+		}
 	}
 }
