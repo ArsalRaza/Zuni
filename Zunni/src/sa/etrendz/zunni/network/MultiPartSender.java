@@ -31,7 +31,7 @@ public class MultiPartSender extends NetworkUtils
 		writer.append(CHANGE_LINE + mBoundary + END_REQUEST + CHANGE_LINE);
 		writer.flush();
 		
-		return getResponse(httpURLConnection);
+		return getResponse(httpURLConnection, false);
 	}
 
 	public String sendImagesWithJson(String url, String jsonString,ArrayList<String> mImageBeanList)
@@ -61,7 +61,7 @@ public class MultiPartSender extends NetworkUtils
 			writer.append(mBoundary + END_REQUEST + CHANGE_LINE);
 			writer.flush();
 
-			return getResponse(httpURLConnection);
+			return getResponse(httpURLConnection, false);
 
 		}
 		catch (Exception e) 
@@ -92,7 +92,7 @@ public class MultiPartSender extends NetworkUtils
 		writer.append(mBoundary + END_REQUEST + CHANGE_LINE);
 		writer.flush();
 		
-		return getResponse(httpURLConnection);
+		return getResponse(httpURLConnection, false);
 	}
 	
 //	public String uploadImagesAddPost(Activity mContext, String URL, String jsonString, ArrayList<ImageListBean> mImageBeanList) throws Exception

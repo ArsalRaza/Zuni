@@ -33,6 +33,7 @@ public class SubCategoryAdapter extends BaseAdapter implements Callback, OnClick
 	private LayoutInflater mLayoutInflater;
 	private int mHeight;
 
+	@SuppressWarnings("deprecation")
 	public SubCategoryAdapter(Activity activitySubCategoryProducts, List<BeanSubCategoryProductForAdapter> mCategoryDetailBean) 
 	{
 		this.mActivity = activitySubCategoryProducts;

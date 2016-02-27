@@ -1,8 +1,5 @@
 package sa.etrendz.zunni;
 
-import java.net.CookieHandler;
-import java.net.CookieManager;
-import java.net.CookiePolicy;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -16,7 +13,6 @@ public class ActivitySplash extends AppCompatActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-//		CookieHandler.setDefault( new CookieManager( null, CookiePolicy.ACCEPT_ALL ) );
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		Timer timer = new Timer();

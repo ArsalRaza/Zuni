@@ -5,6 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+
+import sa.etrendz.zunni.ZunniApplication;
+import sa.etrendz.zunni.utils.ZunniConstants;
+import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 public class NetworkUtils 
 {
@@ -36,11 +45,11 @@ public class NetworkUtils
 
 
 	public String mBoundary = END_REQUEST + END_REQUEST + "WebKitFormBoundaryflDIl9j7fMbC5CDw";
-	public CookieManager mCookieManager;
+//	public CookieManager mCookieManager;
 
 	public NetworkUtils()
 	{
-		this.mCookieManager = new CookieManager();
+//		this.mCookieManager = new CookieManager();
 	}
 	
 	public HttpURLConnection getUrlConnection(String URL, String httpMethod,
@@ -72,15 +81,37 @@ public class NetworkUtils
 		
 		//Melltoo Header
 		urlConnection.setRequestProperty("version", "1");
-		mCookieManager.setCookies(urlConnection);
-		
+		JSONArray cookieArray = new JSONArray(ZunniApplication.getmAppPreferences().getString(ZunniConstants.COOKIE_HANDLER, "[]"));
+		String cookieString = "";
+		for (int i = 0; i < cookieArray.length(); i++) 
+		{
+			cookieString = cookieString + cookieArray.getString(i) + ";";
+		}
+		urlConnection.setRequestProperty("Cookie", cookieString);
 		return urlConnection;
 	}
 
-	public String getResponse(HttpURLConnection urlConnection) throws Exception 
+	public String getResponse(HttpURLConnection urlConnection, boolean isSaveCookie) throws Exception 
 	{
 		String response = "";
-		mCookieManager.storeCookies(urlConnection);
+		if (isSaveCookie)
+		{
+			Map<String, List<String>> headerFields = urlConnection.getHeaderFields();
+			List<String> cookiesHeader = headerFields.get(COOKIES_HEADER);
+			
+			if(cookiesHeader != null)
+			{
+				JSONArray jsonArray = new JSONArray();
+				Editor editor = ZunniApplication.getmAppPrefEditor();
+			    for (String cookie : cookiesHeader) 
+			    {
+			    	jsonArray.put(cookie);
+			    	Log.e("Cookie-Adding:", cookie);
+			    }
+			    editor.putString(ZunniConstants.COOKIE_HANDLER, jsonArray.toString());
+			    editor.commit();
+			}
+		}
 		
 		int status = urlConnection.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK)

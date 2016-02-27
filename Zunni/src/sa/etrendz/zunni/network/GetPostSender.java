@@ -29,7 +29,7 @@ public class GetPostSender extends NetworkUtils
 //				ZuniUtils.LogEvent("No Cookie Found...!");
 //			}
 			httpURLConnection.connect();
-			String response = getResponse(httpURLConnection);
+			String response = getResponse(httpURLConnection, true);
 	        
 	        return response;
 		}
@@ -51,21 +51,15 @@ public class GetPostSender extends NetworkUtils
 			}
 			
 			httpURLConnection = getUrlConnection(ZunniConstants.BASE_URL + url, HTTP_POST, APPLICATION_JSON, "");
-//			CookieManager msCookieManager = new CookieManager();
-//			if(msCookieManager.getCookieStore().getCookies().size() > 0)
-//			{
-//			    //While joining the Cookies, use ',' or ';' as needed. Most of the server are using ';'
-//				httpURLConnection.setRequestProperty("Cookie",
-//			    TextUtils.join(";",  msCookieManager.getCookieStore().getCookies()));    
-//			}
 			httpURLConnection.connect();
 			
 			PrintWriter writer = new PrintWriter(new OutputStreamWriter(httpURLConnection.getOutputStream(), "UTF-8"),
 	                true);
 			writer.write(params.toString());
 			writer.flush();
-	        String response = getResponse(httpURLConnection);
-	        if(ZunniConstants.isLogEnabled){
+	        String response = getResponse(httpURLConnection, true);
+	        if(ZunniConstants.isLogEnabled)
+	        {
 				Log.e("Response", response );
 			}
 	        return response;

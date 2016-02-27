@@ -1,6 +1,7 @@
 package sa.etrendz.zunni.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BeanProductDetail 
 {
@@ -10,6 +11,8 @@ public class BeanProductDetail
 	,Id;
 	
 	private BeanProductPrice ProductPrice;
+
+	private List<BeanProductForCategory> mRelatedProducts;
 
 	public String getmProductId() {
 		return Id;
@@ -41,5 +44,13 @@ public class BeanProductDetail
 
 	public void setmProductName(String name) {
 		Name = name;
+	}
+
+	public List<BeanProductForCategory> getmRelatedProducts() {
+		return mRelatedProducts;
+	}
+
+	public void setmRelatedProducts(List<BeanProductForCategory> mRelatedProducts) {
+		this.mRelatedProducts = mRelatedProducts;
 	}
 }

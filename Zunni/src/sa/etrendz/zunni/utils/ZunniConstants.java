@@ -15,4 +15,7 @@ public class ZunniConstants
 	public static final String USER_NAME_PREFS_KEY = "USER_NAME_KEY";
 	public static final String LOGIN_URL = "Customer/LoginUser";
 	public static final String IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN";
+	public static final String ADD_TO_CART = "ShoppingCart/AddProductToCart_Details";
+	public static final String COOKIE_HANDLER = "COOKIE_HANDLER";
+	public static final String GET_PRODUCT_WITH_RELATED_PRODUCTS = "Product/ProductDetailsWithRelatedProducts";
 }
