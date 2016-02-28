@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:orientation="vertical" >
+    
+	<ImageView 
+	    android:id="@+id/activity_product_review_color_imgview"
+		android:layout_height="30dp"
+		android:layout_width="30dp"
+		android:layout_marginRight="@dimen/margin_15"
+		android:background="@drawable/rounded_brown"
+		android:contentDescription="@string/app_name"/>
+</LinearLayout>

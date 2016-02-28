@@ -98,7 +98,8 @@
 		android:layout_width="match_parent"
 		android:padding="@dimen/margin_10"
 		android:layout_marginLeft="@dimen/margin_10"
-	    android:layout_below="@id/activity_product_review_image_layout">
+	    android:layout_below="@id/activity_product_review_image_layout"
+	    android:visibility="gone">
 
 	    <TextView
 	        android:id="@+id/activity_product_review_color_title"
@@ -110,35 +111,14 @@
 	        android:gravity="center"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 	    
-	    <ImageView 
-	        android:id="@+id/activity_product_review_color_brown"
-			android:layout_height="30dp"
-			android:layout_width="30dp"
+		<LinearLayout
+			android:id="@+id/activity_product_review_color_inflate_layout"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
 			android:layout_marginTop="@dimen/margin_10"
 			android:layout_below="@id/activity_product_review_color_title"
-			android:background="@drawable/rounded_brown"
-			android:contentDescription="@string/app_name"/>
-	    
-	    <ImageView 
-	        android:id="@+id/activity_product_review_color_blue"
-			android:layout_height="30dp"
-			android:layout_width="30dp"
-			android:layout_alignTop="@id/activity_product_review_color_brown"
-			android:layout_toRightOf="@id/activity_product_review_color_brown"
-			android:layout_marginLeft="@dimen/margin_10"
-			android:background="@drawable/rounded_sky_blue"
-			android:contentDescription="@string/app_name"/>
-		
-		<ImageView 
-	        android:id="@+id/activity_product_review_color_green"
-			android:layout_height="30dp"
-			android:layout_width="30dp"
-			android:layout_alignTop="@id/activity_product_review_color_brown"
-			android:layout_toRightOf="@id/activity_product_review_color_blue"
-			android:layout_marginLeft="@dimen/margin_10"
-			android:background="@drawable/rounded_green"
-			android:contentDescription="@string/app_name"/>
-	    
+			android:orientation="horizontal">
+		</LinearLayout>
 	</RelativeLayout>	
 	
 	<RelativeLayout

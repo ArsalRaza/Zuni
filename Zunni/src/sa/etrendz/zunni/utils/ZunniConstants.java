@@ -18,4 +18,7 @@ public class ZunniConstants
 	public static final String ADD_TO_CART = "ShoppingCart/AddProductToCart_Details";
 	public static final String COOKIE_HANDLER = "COOKIE_HANDLER";
 	public static final String GET_PRODUCT_WITH_RELATED_PRODUCTS = "Product/ProductDetailsWithRelatedProducts";
+
+	public static final int ATTRIBUTE_SIZE_TYPE = 1;
+	public static final int ATTRIBUTE_COLOR_TYPE = 40;
 }

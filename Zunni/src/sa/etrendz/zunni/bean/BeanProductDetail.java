@@ -8,7 +8,7 @@ public class BeanProductDetail
 	private ArrayList<BeanServerImage> PictureModels;
 	
 	private String Name, ShortDescription, FullDescription, MetaKeywords, MetaDescription, MetaTitle, SeName
-	,Id;
+	,Id, ProductAttributes;
 	
 	private BeanProductPrice ProductPrice;
 
@@ -52,5 +52,13 @@ public class BeanProductDetail
 
 	public void setmRelatedProducts(List<BeanProductForCategory> mRelatedProducts) {
 		this.mRelatedProducts = mRelatedProducts;
+	}
+
+	public String getProductAttributes() {
+		return ProductAttributes;
+	}
+
+	public void setProductAttributes(String productAttributes) {
+		ProductAttributes = productAttributes;
 	}
 }

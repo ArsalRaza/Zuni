@@ -2,6 +2,8 @@ package sa.etrendz.zunni;
 
 import java.util.List;
 
+import org.json.JSONArray;
+
 import sa.etrendz.zunni.adapter.AdapterProductReviewImageAdapter;
 import sa.etrendz.zunni.asynctask.AsynctaskAddToCart;
 import sa.etrendz.zunni.asynctask.AsynctaskGetProductDetail;
@@ -21,8 +23,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ReadContext;
 
 public class ActivityProductReview extends AppCompatActivity implements OnClickListener 
 {
@@ -34,12 +40,17 @@ public class ActivityProductReview extends AppCompatActivity implements OnClickL
 	private LinearLayout mRelatedProductsLayout;
 	private TextView mRelatedProductsTitleTextView;
 	private TextView mAddToCartTextView;
+	private RelativeLayout mColorLayout;
+	private LinearLayout mColorInflateLayout;
+	private LayoutInflater mLayoutInflator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_review);
+		mLayoutInflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
 		initActionBar();
 		InitUI();
 		
@@ -65,7 +76,7 @@ public class ActivityProductReview extends AppCompatActivity implements OnClickL
 		toolbar.setNavigationOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) 
+			public void onClick(View v)
 			{
 				finish();
 			}
@@ -83,10 +94,12 @@ public class ActivityProductReview extends AppCompatActivity implements OnClickL
 		mImageViewPager = (ViewPager) findViewById(R.id.activity_product_review_viewpager);
 		mRelatedProductsLayout = (LinearLayout) findViewById(R.id.activity_product_review_similar_products);
 		mRelatedProductsTitleTextView = (TextView) findViewById(R.id.activity_product_review_matching_title);
-	
+		
+		mColorLayout = (RelativeLayout) findViewById(R.id.activity_product_review_color_layout);
+		mColorInflateLayout = (LinearLayout) findViewById(R.id.activity_product_review_color_inflate_layout);
+		
 		//!-- Add to cart view
 		mAddToCartTextView = (TextView) findViewById(R.id.shopping_cart_imgview);
-		
 		mAddToCartTextView.setOnClickListener(this);
 	}
 
@@ -109,9 +122,62 @@ public class ActivityProductReview extends AppCompatActivity implements OnClickL
 			((AdapterProductReviewImageAdapter) mImageViewPager.getAdapter()).notifyListChanged(mProductDetailBean.getmProductImageModel());
 		
 		getSupportActionBar().setTitle(mProductBean.getmProductName());
-	
+		
+		//!-- Adding attributes --!//
+		updateAttributesOfPost(mProductDetailBean.getProductAttributes());
+		
 		//!-- Setting related products --!//
 		updateRelatedProducts(mProductDetailBean.getmRelatedProducts());
+	}
+
+	private void updateAttributesOfPost(String attributes)
+	{
+		try
+		{
+			JSONArray attributesRawArray = new JSONArray(attributes);
+			ReadContext jsonPath = JsonPath.parse(attributes);
+			for (int i = 0; i < attributesRawArray.length(); i++)
+			{
+				String rootNode = "$[" + i + "]";
+				int controlType = jsonPath.read(rootNode + "[AttributeControlType]");
+				
+				switch (controlType)
+				{
+				case ZunniConstants.ATTRIBUTE_COLOR_TYPE:
+					setColorLayout(rootNode, attributes);
+					break;
+					
+				case ZunniConstants.ATTRIBUTE_SIZE_TYPE:
+					
+					break;
+				}
+			}
+		}
+		catch (Exception exception)
+		{
+			exception.printStackTrace();
+		}
+	}
+
+	private void setColorLayout(String rootNode, String attributes)
+	{
+		mColorLayout.setVisibility(View.VISIBLE);
+		mColorInflateLayout.removeAllViews();
+		
+		ReadContext jsonPath = JsonPath.parse(attributes);
+		rootNode = rootNode + ".Values";
+		int noOfColors = jsonPath.read(rootNode + ".length()");
+		
+		for (int i = 0; i < noOfColors; i++)
+		{
+			View view = mLayoutInflator.inflate(R.layout.inflate_color_product_review, null);
+			ImageView colorImageView = (ImageView) view.findViewById(R.id.activity_product_review_color_imgview);
+			
+		}
+//		for (int i = 0; i < array.length; i++)
+//		{
+//			View view = mLayoutInflator.inflate(R.layout.inflate_color_product_review, null);
+//		}
 	}
 
 	public void updateRelatedProducts(List<BeanProductForCategory> mBeanRelatedProducts) 
