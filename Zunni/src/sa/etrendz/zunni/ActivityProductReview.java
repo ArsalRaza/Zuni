@@ -1,17 +1,20 @@
 package sa.etrendz.zunni;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
 
 import sa.etrendz.zunni.adapter.AdapterProductReviewImageAdapter;
 import sa.etrendz.zunni.asynctask.AsynctaskAddToCart;
 import sa.etrendz.zunni.asynctask.AsynctaskGetProductDetail;
+import sa.etrendz.zunni.bean.BeanPostAttributes;
+import sa.etrendz.zunni.bean.BeanPostAttributes.BeanProductAttributeValues;
 import sa.etrendz.zunni.bean.BeanProductDetail;
 import sa.etrendz.zunni.bean.BeanProductForCategory;
+import sa.etrendz.zunni.bean.BeanServerImage;
 import sa.etrendz.zunni.utils.ZunniConstants;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -26,9 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ReadContext;
 
 public class ActivityProductReview extends AppCompatActivity implements OnClickListener 
 {
@@ -130,21 +130,18 @@ public class ActivityProductReview extends AppCompatActivity implements OnClickL
 		updateRelatedProducts(mProductDetailBean.getmRelatedProducts());
 	}
 
-	private void updateAttributesOfPost(String attributes)
+	private void updateAttributesOfPost(ArrayList<BeanPostAttributes> attributes)
 	{
 		try
 		{
-			JSONArray attributesRawArray = new JSONArray(attributes);
-			ReadContext jsonPath = JsonPath.parse(attributes);
-			for (int i = 0; i < attributesRawArray.length(); i++)
+			for (int i = 0; i < attributes.size(); i++)
 			{
-				String rootNode = "$[" + i + "]";
-				int controlType = jsonPath.read(rootNode + "[AttributeControlType]");
-				
+				int controlType = Integer.valueOf(attributes.get(i).getAttributeControlType());
 				switch (controlType)
 				{
+				
 				case ZunniConstants.ATTRIBUTE_COLOR_TYPE:
-					setColorLayout(rootNode, attributes);
+					setColorLayout(attributes.get(i).getAttributeValues());
 					break;
 					
 				case ZunniConstants.ATTRIBUTE_SIZE_TYPE:
@@ -159,25 +156,25 @@ public class ActivityProductReview extends AppCompatActivity implements OnClickL
 		}
 	}
 
-	private void setColorLayout(String rootNode, String attributes)
+	private void setColorLayout(ArrayList<BeanProductAttributeValues> attributeValues)
 	{
 		mColorLayout.setVisibility(View.VISIBLE);
 		mColorInflateLayout.removeAllViews();
 		
-		ReadContext jsonPath = JsonPath.parse(attributes);
-		rootNode = rootNode + ".Values";
-		int noOfColors = jsonPath.read(rootNode + ".length()");
-		
-		for (int i = 0; i < noOfColors; i++)
+		for (int i = 0; i < attributeValues.size(); i++)
 		{
-			View view = mLayoutInflator.inflate(R.layout.inflate_color_product_review, null);
-			ImageView colorImageView = (ImageView) view.findViewById(R.id.activity_product_review_color_imgview);
-			
+			BeanServerImage beanServerImage = attributeValues.get(i).getPictureModel();
+			if (attributeValues.get(i).getColorSquaresRgb() != null && attributeValues.get(i).getColorSquaresRgb().isEmpty() == false
+					&& beanServerImage != null && beanServerImage.getmFullSizeImageUrl() != null && beanServerImage.getmFullSizeImageUrl().isEmpty() == false)
+			{
+				// Now, we are safe to make the view of color
+				View view = mLayoutInflator.inflate(R.layout.inflate_color_product_review, null);
+				ImageView colorImageView = (ImageView) view.findViewById(R.id.activity_product_review_color_imgview);
+				
+				colorImageView.setBackgroundColor(Color.parseColor(attributeValues.get(i).getColorSquaresRgb()));
+				mColorInflateLayout.addView(view);
+			}
 		}
-//		for (int i = 0; i < array.length; i++)
-//		{
-//			View view = mLayoutInflator.inflate(R.layout.inflate_color_product_review, null);
-//		}
 	}
 
 	public void updateRelatedProducts(List<BeanProductForCategory> mBeanRelatedProducts) 

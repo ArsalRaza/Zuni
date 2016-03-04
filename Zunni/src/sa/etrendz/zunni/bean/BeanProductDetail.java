@@ -8,8 +8,8 @@ public class BeanProductDetail
 	private ArrayList<BeanServerImage> PictureModels;
 	
 	private String Name, ShortDescription, FullDescription, MetaKeywords, MetaDescription, MetaTitle, SeName
-	,Id, ProductAttributes;
-	
+	,Id;
+	private ArrayList<BeanPostAttributes> ProductAttributes;
 	private BeanProductPrice ProductPrice;
 
 	private List<BeanProductForCategory> mRelatedProducts;
@@ -50,15 +50,18 @@ public class BeanProductDetail
 		return mRelatedProducts;
 	}
 
-	public void setmRelatedProducts(List<BeanProductForCategory> mRelatedProducts) {
+	public void setmRelatedProducts(List<BeanProductForCategory> mRelatedProducts)
+	{
 		this.mRelatedProducts = mRelatedProducts;
 	}
 
-	public String getProductAttributes() {
+	public ArrayList<BeanPostAttributes> getProductAttributes()
+	{
 		return ProductAttributes;
 	}
 
-	public void setProductAttributes(String productAttributes) {
+	public void setProductAttributes(ArrayList<BeanPostAttributes> productAttributes)
+	{
 		ProductAttributes = productAttributes;
 	}
 }
